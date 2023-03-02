@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://joljwkjwpkm5"]
+
+[ext_resource type="PackedScene" uid="uid://jqe3sx8b3aan" path="res://src/game/board_grid.tscn" id="1_2da1f"]
+
+[node name="BoardGame" type="Node2D"]
+
+[node name="BoardGrid" parent="." instance=ExtResource("1_2da1f")]
+position = Vector2(40, 40)
+
+[node name="BoardGrid2" parent="." instance=ExtResource("1_2da1f")]
+position = Vector2(40, 400)
