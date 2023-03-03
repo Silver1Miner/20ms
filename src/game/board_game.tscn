@@ -9,3 +9,4 @@ position = Vector2(40, 40)
 
 [node name="BoardGrid2" parent="." instance=ExtResource("1_2da1f")]
 position = Vector2(40, 400)
+player_id = 2
