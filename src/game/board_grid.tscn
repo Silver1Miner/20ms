@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://jqe3sx8b3aan"]
+[gd_scene load_steps=4 format=3 uid="uid://jqe3sx8b3aan"]
 
 [ext_resource type="Script" path="res://src/game/board_grid.gd" id="1_yc8e7"]
+[ext_resource type="AudioStream" uid="uid://c5fvnp5mmgcjg" path="res://assets/audio/ping-82822.mp3" id="2_lcydd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_perxh"]
 size = Vector2(280, 200)
@@ -13,11 +14,26 @@ position = Vector2(140, 100)
 shape = SubResource("RectangleShape2D_perxh")
 
 [node name="CollapseTimer" type="Timer" parent="."]
+wait_time = 0.5
 one_shot = true
 
 [node name="RemoveTimer" type="Timer" parent="."]
+wait_time = 0.5
 one_shot = true
+
+[node name="RefillTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="ReadyTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_lcydd")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="CollapseTimer" to="." method="_on_collapse_timer_timeout"]
 [connection signal="timeout" from="RemoveTimer" to="." method="_on_remove_timer_timeout"]
+[connection signal="timeout" from="RefillTimer" to="." method="_on_refill_timer_timeout"]
+[connection signal="timeout" from="ReadyTimer" to="." method="_on_ready_timer_timeout"]

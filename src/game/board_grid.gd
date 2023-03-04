@@ -4,14 +4,22 @@ extends Area2D
 @export var height := 5
 @export var color_number := 4
 @export var tile_size := 40
+@export var y_grid_spawn_offset := 2
 @export var player_id := 1
 @onready var collapse_timer = $CollapseTimer
+@onready var refill_timer = $RefillTimer
+@onready var remove_timer = $RemoveTimer
+@onready var ready_timer = $ReadyTimer
+@onready var ready_sound = $AudioStreamPlayer
 var grid_state = []
+var current_matches = []
 var piece = preload("res://src/game/piece.tscn")
 var draw_start = Vector2.ZERO
 var draw_end = Vector2.ZERO
 var cell_start = Vector2.ZERO
 var cell_end = Vector2.ZERO
+var last_move = Vector2.ZERO
+var last_move_direction = Vector2.ZERO
 enum States {IDLE,READY,MOVING}
 var state = States.READY
 
@@ -33,7 +41,6 @@ func _on_input_event(_viewport, event, _shape_idx):
 				cell_end = pixel_to_grid(draw_end)
 				print("player ", player_id, " end touch at ", cell_end)
 				touch_difference(cell_start, cell_end)
-				state = States.READY
 		if event is InputEventScreenDrag:
 			draw_end = event.position - global_position
 			cell_end = pixel_to_grid(draw_end)
@@ -105,6 +112,8 @@ func swap_at(i, j, direction: Vector2) -> void:
 	start_piece.move(grid_to_pixel(Vector2(i+direction.x,j+direction.y)))
 	if end_piece:
 		end_piece.move(grid_to_pixel(Vector2(i,j)))
+	last_move = Vector2(i+direction.x, j+direction.y)
+	last_move_direction = direction
 	find_all_matches()
 
 func touch_difference(start: Vector2, end: Vector2) -> void:
@@ -130,25 +139,63 @@ func find_all_matches() -> void:
 					grid_state[i][j].matched()
 					grid_state[i-1][j].matched()
 					grid_state[i-2][j].matched()
+					record_matched(Vector2(i,j))
+					record_matched(Vector2(i-1,j))
+					record_matched(Vector2(i-2,j))
 					has_match = true
 				if match_code == 2 or match_code == 3:
 					grid_state[i][j].matched()
 					grid_state[i][j-1].matched()
 					grid_state[i][j-2].matched()
+					record_matched(Vector2(i,j))
+					record_matched(Vector2(i,j-1))
+					record_matched(Vector2(i,j-2))
 					has_match = true
 	if has_match:
-		$RemoveTimer.start()
+		remove_timer.start()
+	else:
+		ready_timer.start()
+
+func record_matched(cell: Vector2) -> void:
+	if not cell in current_matches:
+		current_matches.append(cell)
+
+func find_powerups() -> void:
+	for i in current_matches.size():
+		var curr_x = current_matches[i].x
+		var curr_y = current_matches[i].y
+		var curr_color = grid_state[curr_x][curr_y].color
+		var col_matched = 0
+		var row_matched = 0
+		for j in current_matches.size():
+			var this_x = current_matches[j].x
+			var this_y = current_matches[j].y
+			var this_color = grid_state[this_x][this_y].color
+			if this_x == curr_x and this_color == curr_color:
+				col_matched += 1
+			if this_y == curr_y and this_color == curr_color:
+				row_matched += 1
+		if col_matched == 4:
+			print("col match 4")
+		if row_matched == 4:
+			print("row match 4")
+		if col_matched == 3 and row_matched == 3:
+			print("overlap match 5")
+		if col_matched == 5 or row_matched == 5:
+			print("series match 5")
 
 func remove_matches() -> void:
+	find_powerups()
 	for i in width:
 		for j in height:
 			if grid_state[i][j] and grid_state[i][j].is_matched:
 				grid_state[i][j].queue_free()
 				grid_state[i][j] = null
+	current_matches.clear()
 	collapse_timer.start()
 
 func collapse_columns() -> void:
-	if player_id == 2: # collapse up/-Y
+	if player_id == 1: # collapse up/-Y
 		for i in width:
 			for j in height:
 				if grid_state[i][j] == null:
@@ -158,7 +205,7 @@ func collapse_columns() -> void:
 							grid_state[i][j] = grid_state[i][k]
 							grid_state[i][k] = null
 							break
-	elif player_id == 1: # collapse down/+Y
+	elif player_id == 2: # collapse down/+Y
 		for i in width:
 			for j in range(height-1,-1,-1):
 				if grid_state[i][j] == null:
@@ -168,12 +215,42 @@ func collapse_columns() -> void:
 							grid_state[i][j] = grid_state[i][k]
 							grid_state[i][k] = null
 							break
+	refill_timer.start()
 
 func refill_columns() -> void:
-	pass
+	for i in width:
+		for j in height:
+			if grid_state[i][j] == null:
+				randomize()
+				var rand = floor(randi_range(0, color_number))
+				var piece_instance = piece.instantiate()
+				piece_instance.set_color(rand)
+				var failsafe = 0
+				while is_match_at(i, j, piece_instance.color) > 0 and failsafe < 100:
+					rand = floor(randi_range(0, color_number))
+					piece_instance.set_color(rand)
+					failsafe += 1
+				if failsafe >= 100:
+					print("random failed")
+				add_child(piece_instance)
+				piece_instance.position.x = i * tile_size
+				if player_id == 1:
+					piece_instance.position.y = (j + y_grid_spawn_offset) * tile_size
+				elif player_id == 2:
+					piece_instance.position.y = (j - y_grid_spawn_offset) * tile_size
+				piece_instance.move(grid_to_pixel(Vector2(i, j)))
+				grid_state[i][j] = piece_instance
+	find_all_matches()
+
+func _on_remove_timer_timeout():
+	remove_matches()
 
 func _on_collapse_timer_timeout():
 	collapse_columns()
 
-func _on_remove_timer_timeout():
-	remove_matches()
+func _on_refill_timer_timeout():
+	refill_columns()
+
+func _on_ready_timer_timeout():
+	ready_sound.play()
+	state = States.READY

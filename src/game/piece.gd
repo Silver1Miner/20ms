@@ -1,6 +1,8 @@
 extends Node2D
 
+enum types {NORMAL,XBOMB,YBOMB,ABOMB}
 @export var color = 0
+@export var piece_type = 0
 var is_matched = false
 var color_sprites = [
 	preload("res://assets/pieces/mmstroke_blue.png"),
@@ -24,3 +26,6 @@ func move(new_position: Vector2) -> void:
 func matched() -> void:
 	is_matched = true
 	$Sprite2D.modulate = Color(1,1,1,0.5)
+
+func make_powerup() -> void:
+	pass
