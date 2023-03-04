@@ -5,6 +5,7 @@ extends Area2D
 @export var color_number := 4
 @export var tile_size := 40
 @export var player_id := 1
+@onready var collapse_timer = $CollapseTimer
 var grid_state = []
 var piece = preload("res://src/game/piece.tscn")
 var draw_start = Vector2.ZERO
@@ -120,6 +121,7 @@ func touch_difference(start: Vector2, end: Vector2) -> void:
 			swap_at(start.x, start.y, Vector2.UP)
 
 func find_all_matches() -> void:
+	var has_match = false
 	for i in width:
 		for j in height:
 			if grid_state[i][j] != null:
@@ -128,10 +130,14 @@ func find_all_matches() -> void:
 					grid_state[i][j].matched()
 					grid_state[i-1][j].matched()
 					grid_state[i-2][j].matched()
+					has_match = true
 				if match_code == 2 or match_code == 3:
 					grid_state[i][j].matched()
 					grid_state[i][j-1].matched()
 					grid_state[i][j-2].matched()
+					has_match = true
+	if has_match:
+		$RemoveTimer.start()
 
 func remove_matches() -> void:
 	for i in width:
@@ -139,3 +145,35 @@ func remove_matches() -> void:
 			if grid_state[i][j] and grid_state[i][j].is_matched:
 				grid_state[i][j].queue_free()
 				grid_state[i][j] = null
+	collapse_timer.start()
+
+func collapse_columns() -> void:
+	if player_id == 2: # collapse up/-Y
+		for i in width:
+			for j in height:
+				if grid_state[i][j] == null:
+					for k in range(j+1, height):
+						if grid_state[i][k] != null:
+							grid_state[i][k].move(grid_to_pixel(Vector2(i, j)))
+							grid_state[i][j] = grid_state[i][k]
+							grid_state[i][k] = null
+							break
+	elif player_id == 1: # collapse down/+Y
+		for i in width:
+			for j in range(height-1,-1,-1):
+				if grid_state[i][j] == null:
+					for k in range(j-1, -1,-1):
+						if grid_state[i][k] != null:
+							grid_state[i][k].move(grid_to_pixel(Vector2(i, j)))
+							grid_state[i][j] = grid_state[i][k]
+							grid_state[i][k] = null
+							break
+
+func refill_columns() -> void:
+	pass
+
+func _on_collapse_timer_timeout():
+	collapse_columns()
+
+func _on_remove_timer_timeout():
+	remove_matches()

@@ -5,8 +5,8 @@
 [node name="BoardGame" type="Node2D"]
 
 [node name="BoardGrid" parent="." instance=ExtResource("1_2da1f")]
-position = Vector2(40, 40)
+position = Vector2(40, 360)
 
 [node name="BoardGrid2" parent="." instance=ExtResource("1_2da1f")]
-position = Vector2(40, 400)
+position = Vector2(40, 40)
 player_id = 2

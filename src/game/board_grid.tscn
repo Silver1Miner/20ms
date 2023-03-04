@@ -12,4 +12,12 @@ script = ExtResource("1_yc8e7")
 position = Vector2(140, 100)
 shape = SubResource("RectangleShape2D_perxh")
 
+[node name="CollapseTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="RemoveTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="timeout" from="CollapseTimer" to="." method="_on_collapse_timer_timeout"]
+[connection signal="timeout" from="RemoveTimer" to="." method="_on_remove_timer_timeout"]

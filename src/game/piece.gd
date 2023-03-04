@@ -19,7 +19,7 @@ func set_color(new_id: int) -> void:
 
 func move(new_position: Vector2) -> void:
 	var tween = create_tween()
-	tween.tween_property(self, "position", new_position, 0.3).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(self, "position", new_position, 0.3).set_trans(Tween.TRANS_ELASTIC)
 
 func matched() -> void:
 	is_matched = true
