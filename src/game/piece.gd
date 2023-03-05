@@ -11,6 +11,13 @@ var color_sprites = [
 	preload("res://assets/pieces/mmstroke_red.png"),
 	preload("res://assets/pieces/mmstroke_yellow.png")
 ]
+var bomb_sprites = [
+	preload("res://assets/pieces/bombs/swirlstroke_blue.png"),
+	preload("res://assets/pieces/bombs/swirlstroke_green.png"),
+	preload("res://assets/pieces/bombs/swirlstroke_purple.png"),
+	preload("res://assets/pieces/bombs/swirlstroke_red.png"),
+	preload("res://assets/pieces/bombs/swirlstroke_yellow.png"),
+]
 
 func set_color(new_id: int) -> void:
 	if new_id < 0 or new_id > color_sprites.size():
@@ -27,5 +34,23 @@ func matched() -> void:
 	is_matched = true
 	$Sprite2D.modulate = Color(1,1,1,0.5)
 
-func make_powerup() -> void:
-	pass
+func set_bomb_color(new_id: int) -> void:
+	if new_id < 0 or new_id > color_sprites.size():
+		push_error("invalid id")
+		return
+	color = new_id
+	$Sprite2D.texture = bomb_sprites[color]
+
+func change_type(new_type: int) -> void:
+	piece_type = new_type
+	match piece_type:
+		types.NORMAL:
+			set_color(color)
+		types.XBOMB:
+			set_bomb_color(color)
+		types.YBOMB:
+			set_bomb_color(color)
+		types.ABOMB:
+			set_bomb_color(color)
+	is_matched = false
+	$Sprite2D.modulate = Color(1,1,1,1)

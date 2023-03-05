@@ -20,6 +20,8 @@ var cell_start = Vector2.ZERO
 var cell_end = Vector2.ZERO
 var last_move = Vector2.ZERO
 var last_move_direction = Vector2.ZERO
+var last_piece = null
+var last_switch = null
 enum States {IDLE,READY,MOVING}
 var state = States.READY
 
@@ -176,13 +178,29 @@ func find_powerups() -> void:
 			if this_y == curr_y and this_color == curr_color:
 				row_matched += 1
 		if col_matched == 4:
-			print("col match 4")
-		if row_matched == 4:
-			print("row match 4")
-		if col_matched == 3 and row_matched == 3:
+			create_powerup(1, curr_color)
+		elif row_matched == 4:
+			create_powerup(2, curr_color)
+		elif col_matched == 3 and row_matched == 3:
 			print("overlap match 5")
-		if col_matched == 5 or row_matched == 5:
+			create_powerup(3, curr_color)
+		elif col_matched == 5 or row_matched == 5:
 			print("series match 5")
+			create_powerup(3, curr_color)
+
+func create_powerup(power_type: int, color_id: int) -> void:
+	print("power type: ", power_type, " color id: ", color_id)
+	for i in current_matches.size():
+		var curr_x = current_matches[i].x
+		var curr_y = current_matches[i].y
+		var last_piece = grid_state[last_move.x][last_move.y]
+		var last_switch = grid_state[last_move.x+last_move_direction.x][last_move.y+last_move_direction.y]
+		if grid_state[curr_x][curr_y] == last_piece and last_piece.color == color_id:
+			last_piece.is_matched = false
+			last_piece.change_type(power_type)
+		elif grid_state[curr_x][curr_y] == last_switch and last_switch.color == color_id:
+			last_switch.is_matched = false
+			last_switch.change_type(power_type)
 
 func remove_matches() -> void:
 	find_powerups()
