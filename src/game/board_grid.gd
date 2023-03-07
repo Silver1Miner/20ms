@@ -20,8 +20,8 @@ var cell_start = Vector2.ZERO
 var cell_end = Vector2.ZERO
 var last_move = Vector2.ZERO
 var last_move_direction = Vector2.ZERO
-var last_piece = null
-var last_switch = null
+var last_piece_one = null
+var last_piece_two = null
 enum States {IDLE,READY,MOVING}
 var state = States.READY
 
@@ -116,6 +116,8 @@ func swap_at(i, j, direction: Vector2) -> void:
 		end_piece.move(grid_to_pixel(Vector2(i,j)))
 	last_move = Vector2(i+direction.x, j+direction.y)
 	last_move_direction = direction
+	last_piece_one = start_piece
+	last_piece_two = end_piece
 	find_all_matches()
 
 func touch_difference(start: Vector2, end: Vector2) -> void:
@@ -193,14 +195,14 @@ func create_powerup(power_type: int, color_id: int) -> void:
 	for i in current_matches.size():
 		var curr_x = current_matches[i].x
 		var curr_y = current_matches[i].y
-		var last_piece = grid_state[last_move.x][last_move.y]
-		var last_switch = grid_state[last_move.x+last_move_direction.x][last_move.y+last_move_direction.y]
-		if grid_state[curr_x][curr_y] == last_piece and last_piece.color == color_id:
-			last_piece.is_matched = false
-			last_piece.change_type(power_type)
-		elif grid_state[curr_x][curr_y] == last_switch and last_switch.color == color_id:
-			last_switch.is_matched = false
-			last_switch.change_type(power_type)
+		last_piece_one = grid_state[last_move.x][last_move.y]
+		last_piece_two = grid_state[last_move.x+last_move_direction.x][last_move.y+last_move_direction.y]
+		if grid_state[curr_x][curr_y] == last_piece_one and last_piece_one.color == color_id:
+			last_piece_one.is_matched = false
+			last_piece_one.change_type(power_type)
+		elif grid_state[curr_x][curr_y] == last_piece_two and last_piece_two.color == color_id:
+			last_piece_two.is_matched = false
+			last_piece_two.change_type(power_type)
 
 func remove_matches() -> void:
 	find_powerups()
