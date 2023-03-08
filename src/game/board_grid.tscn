@@ -25,15 +25,10 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 
-[node name="ReadyTimer" type="Timer" parent="."]
-wait_time = 0.5
-one_shot = true
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="ReadyPing" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_lcydd")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="CollapseTimer" to="." method="_on_collapse_timer_timeout"]
 [connection signal="timeout" from="RemoveTimer" to="." method="_on_remove_timer_timeout"]
 [connection signal="timeout" from="RefillTimer" to="." method="_on_refill_timer_timeout"]
-[connection signal="timeout" from="ReadyTimer" to="." method="_on_ready_timer_timeout"]
