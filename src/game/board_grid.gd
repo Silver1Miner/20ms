@@ -2,7 +2,7 @@ extends Area2D
 
 @export var width := 7
 @export var height := 5
-@export var color_number := 4
+@export var color_number := 2
 @export var tile_size := 40
 @export var y_grid_spawn_offset := 2
 @export var player_id := 1
@@ -169,6 +169,7 @@ func find_all_matches() -> void:
 					record_matched(Vector2(i,j))
 					record_matched(Vector2(i,j-1))
 					record_matched(Vector2(i,j-2))
+	find_activated_powerups()
 	remove_timer.start()
 
 func record_matched(cell: Vector2) -> void:
@@ -193,13 +194,11 @@ func find_powerups() -> void:
 		if col_matched == 4:
 			create_powerup(1, curr_color)
 		elif row_matched == 4:
-			create_powerup(2, curr_color)
+			create_powerup(1, curr_color)
 		elif col_matched == 3 and row_matched == 3:
-			print("overlap match 5")
-			create_powerup(3, curr_color)
+			create_powerup(2, curr_color)
 		elif col_matched == 5 or row_matched == 5:
-			print("series match 5")
-			create_powerup(3, curr_color)
+			create_powerup(2, curr_color)
 
 func create_powerup(power_type: int, color_id: int) -> void:
 	print("power type: ", power_type, " color id: ", color_id)
@@ -214,6 +213,34 @@ func create_powerup(power_type: int, color_id: int) -> void:
 		elif current_grid[curr_x][curr_y] == last_piece_two and last_piece_two.color == color_id:
 			last_piece_two.is_matched = false
 			last_piece_two.change_type(power_type)
+
+func find_activated_powerups() -> void:
+	for i in width:
+		for j in height:
+			if current_grid[i][j] != null and current_grid[i][j].is_matched:
+				if current_grid[i][j].piece_type == 1:
+					find_adjacents(i,j)
+				elif current_grid[i][j].piece_type == 2:
+					find_colors(current_grid[i][j].color)
+
+func find_adjacents(col: int, row: int) -> void:
+	for i in range(-1, 2):
+		for j in range(-1, 2):
+			if is_within_limits(Vector2(col+i,row+j)):
+				if current_grid[col+i][row+j] != null:
+					if current_grid[col+i][row+j].piece_type == 2:
+						find_colors(current_grid[col+i][row+j].color)
+					current_grid[col+i][row+j].matched()
+					record_matched(Vector2(col+i,row+j))
+
+func find_colors(color_id: int) -> void:
+	for i in width:
+		for j in height:
+			if current_grid[i][j] != null and current_grid[i][j].color == color_id:
+				if current_grid[i][j].piece_type == 1:
+					find_adjacents(i,j)
+				current_grid[i][j].matched()
+				record_matched(Vector2(i,j))
 
 func remove_matches() -> void:
 	find_powerups()

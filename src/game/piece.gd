@@ -1,6 +1,6 @@
 extends Node2D
 
-enum types {NORMAL,XBOMB,YBOMB,ABOMB}
+enum types {NORMAL,ABOMB,CBOMB}
 @export var color = 0
 @export var piece_type = 0
 var is_matched = false
@@ -17,6 +17,13 @@ var bomb_sprites = [
 	preload("res://assets/pieces/bombs/swirlstroke_purple.png"),
 	preload("res://assets/pieces/bombs/swirlstroke_red.png"),
 	preload("res://assets/pieces/bombs/swirlstroke_yellow.png"),
+]
+var color_bomb_sprites = [
+	preload("res://assets/pieces/colorbombs/wrappedsolid_blue.png"),
+	preload("res://assets/pieces/colorbombs/wrappedsolid_green.png"),
+	preload("res://assets/pieces/colorbombs/wrappedsolid_purple.png"),
+	preload("res://assets/pieces/colorbombs/wrappedsolid_red.png"),
+	preload("res://assets/pieces/colorbombs/wrappedsolid_yellow.png"),
 ]
 
 func set_color(new_id: int) -> void:
@@ -41,16 +48,21 @@ func set_bomb_color(new_id: int) -> void:
 	color = new_id
 	$Sprite2D.texture = bomb_sprites[color]
 
+func set_color_bomb_color(new_id: int) -> void:
+	if new_id < 0 or new_id > color_sprites.size():
+		push_error("invalid id")
+		return
+	color = new_id
+	$Sprite2D.texture = color_bomb_sprites[color]
+
 func change_type(new_type: int) -> void:
 	piece_type = new_type
 	match piece_type:
 		types.NORMAL:
 			set_color(color)
-		types.XBOMB:
-			set_bomb_color(color)
-		types.YBOMB:
-			set_bomb_color(color)
 		types.ABOMB:
 			set_bomb_color(color)
+		types.CBOMB:
+			set_color_bomb_color(color)
 	is_matched = false
 	$Sprite2D.modulate = Color(1,1,1,1)
