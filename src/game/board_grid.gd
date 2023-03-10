@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var width := 7
+@export var width := 9
 @export var height := 5
 @export var color_number := 2
 @export var tile_size := 40
