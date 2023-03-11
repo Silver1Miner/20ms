@@ -209,9 +209,11 @@ func create_powerup(power_type: int, color_id: int) -> void:
 		last_piece_two = current_grid[last_move.x+last_move_direction.x][last_move.y+last_move_direction.y]
 		if current_grid[curr_x][curr_y] == last_piece_one and last_piece_one.color == color_id:
 			last_piece_one.is_matched = false
+			last_piece_one.generate_attack(player_id)
 			last_piece_one.change_type(power_type)
 		elif current_grid[curr_x][curr_y] == last_piece_two and last_piece_two.color == color_id:
 			last_piece_two.is_matched = false
+			last_piece_two.generate_attack(player_id)
 			last_piece_two.change_type(power_type)
 
 func find_activated_powerups() -> void:

@@ -1,25 +1,46 @@
-[gd_scene load_steps=2 format=3 uid="uid://joljwkjwpkm5"]
+[gd_scene load_steps=3 format=3 uid="uid://joljwkjwpkm5"]
 
 [ext_resource type="PackedScene" uid="uid://bqchm65lr6ibr" path="res://src/game/player_board.tscn" id="1_o8jcy"]
+[ext_resource type="Script" path="res://src/game/board_game.gd" id="1_qjl12"]
 
 [node name="BoardGame" type="Node2D"]
+script = ExtResource("1_qjl12")
 
 [node name="PlayerBoard" parent="." instance=ExtResource("1_o8jcy")]
-position = Vector2(0, 400)
+position = Vector2(0, 360)
 
 [node name="PlayerBoard2" parent="." instance=ExtResource("1_o8jcy")]
+position = Vector2(0, 40)
 player_id = 2
 
-[node name="BoardGrid" parent="PlayerBoard2" index="0"]
-position = Vector2(0, 0)
-
-[node name="TowerLeft" parent="PlayerBoard2" index="1"]
+[node name="TowerLeft" parent="PlayerBoard2" index="0"]
 position = Vector2(0, 200)
 
-[node name="TowerCenter" parent="PlayerBoard2" index="2"]
+[node name="TowerCenter" parent="PlayerBoard2" index="1"]
 position = Vector2(120, 200)
 
-[node name="TowerRight" parent="PlayerBoard2" index="3"]
+[node name="TowerRight" parent="PlayerBoard2" index="2"]
 position = Vector2(240, 200)
+
+[node name="BoardGrid" parent="PlayerBoard2" index="3"]
+position = Vector2(0, 0)
+
+[node name="PlayerStatus" parent="PlayerBoard2" index="4"]
+offset_top = -40.0
+offset_bottom = 0.0
+
+[node name="GameOverScreen" type="Panel" parent="."]
+visible = false
+custom_minimum_size = Vector2(360, 640)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 360.0
+offset_bottom = 640.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="player_defeated" from="PlayerBoard" to="." method="_on_player_board_player_defeated"]
+[connection signal="player_defeated" from="PlayerBoard2" to="." method="_on_player_board_2_player_defeated"]
 
 [editable path="PlayerBoard2"]

@@ -26,7 +26,6 @@ layout_mode = 2
 [node name="SelectBarButton3" parent="." instance=ExtResource("1_2imlp")]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
-button_pressed = true
 
 [node name="SelectBarButton4" parent="." instance=ExtResource("1_2imlp")]
 layout_mode = 2

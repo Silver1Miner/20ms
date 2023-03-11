@@ -71,6 +71,7 @@ func change_type(new_type: int) -> void:
 func generate_attack(player_id: int) -> void:
 	var attack_instance = attack_projectile.instantiate()
 	get_parent().add_child(attack_instance)
+	attack_instance.set_color(color)
 	attack_instance.player_id = player_id
 	attack_instance.global_position = global_position
 	if player_id == 1:

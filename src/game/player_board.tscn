@@ -7,9 +7,6 @@
 [node name="PlayerBoard" type="Node2D"]
 script = ExtResource("1_re6hp")
 
-[node name="BoardGrid" parent="." instance=ExtResource("1_pwd0c")]
-position = Vector2(0, 40)
-
 [node name="TowerLeft" parent="." instance=ExtResource("2_nbc3a")]
 
 [node name="TowerCenter" parent="." instance=ExtResource("2_nbc3a")]
@@ -17,3 +14,42 @@ position = Vector2(120, 0)
 
 [node name="TowerRight" parent="." instance=ExtResource("2_nbc3a")]
 position = Vector2(240, 0)
+
+[node name="BoardGrid" parent="." instance=ExtResource("1_pwd0c")]
+position = Vector2(0, 40)
+
+[node name="PlayerStatus" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 240.0
+offset_right = 360.0
+offset_bottom = 280.0
+
+[node name="LeftBar" type="ProgressBar" parent="PlayerStatus"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 0
+offset_left = 20.0
+offset_right = 100.0
+offset_bottom = 27.0
+step = 1.0
+
+[node name="CenterBar" type="ProgressBar" parent="PlayerStatus"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 0
+offset_left = 140.0
+offset_right = 220.0
+offset_bottom = 27.0
+
+[node name="RightBar" type="ProgressBar" parent="PlayerStatus"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 0
+offset_left = 260.0
+offset_right = 340.0
+offset_bottom = 27.0
+
+[connection signal="tower_destroyed" from="TowerLeft" to="." method="_on_tower_left_tower_destroyed"]
+[connection signal="tower_hp_updated" from="TowerLeft" to="." method="_on_tower_left_tower_hp_updated"]
+[connection signal="tower_destroyed" from="TowerCenter" to="." method="_on_tower_center_tower_destroyed"]
+[connection signal="tower_hp_updated" from="TowerCenter" to="." method="_on_tower_center_tower_hp_updated"]
+[connection signal="tower_destroyed" from="TowerRight" to="." method="_on_tower_right_tower_destroyed"]
+[connection signal="tower_hp_updated" from="TowerRight" to="." method="_on_tower_right_tower_hp_updated"]
