@@ -3,6 +3,7 @@ extends Node2D
 enum types {NORMAL,ABOMB,CBOMB}
 @export var color = 0
 @export var piece_type = 0
+var attack_projectile = preload("res://src/game/attack.tscn")
 var is_matched = false
 var color_sprites = [
 	preload("res://assets/pieces/mmstroke_blue.png"),
@@ -66,3 +67,13 @@ func change_type(new_type: int) -> void:
 			set_color_bomb_color(color)
 	is_matched = false
 	$Sprite2D.modulate = Color(1,1,1,1)
+
+func generate_attack(player_id: int) -> void:
+	var attack_instance = attack_projectile.instantiate()
+	get_parent().add_child(attack_instance)
+	attack_instance.player_id = player_id
+	attack_instance.global_position = global_position
+	if player_id == 1:
+		attack_instance.direction = Vector2.UP
+	elif player_id == 2:
+		attack_instance.direction = Vector2.DOWN

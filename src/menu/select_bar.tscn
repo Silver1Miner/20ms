@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://b36a7ab3bx3dd"]
+
+[ext_resource type="PackedScene" uid="uid://bcsvs3l5auciy" path="res://src/menu/select_bar_button.tscn" id="1_2imlp"]
+[ext_resource type="Script" path="res://src/menu/select_bar.gd" id="1_hk4a6"]
+
+[node name="SelectBar" type="HBoxContainer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = -60.0
+offset_right = 180.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 0
+script = ExtResource("1_hk4a6")
+
+[node name="SelectBarButton" parent="." instance=ExtResource("1_2imlp")]
+layout_mode = 2
+
+[node name="SelectBarButton2" parent="." instance=ExtResource("1_2imlp")]
+layout_mode = 2
+
+[node name="SelectBarButton3" parent="." instance=ExtResource("1_2imlp")]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+button_pressed = true
+
+[node name="SelectBarButton4" parent="." instance=ExtResource("1_2imlp")]
+layout_mode = 2
+
+[node name="SelectBarButton5" parent="." instance=ExtResource("1_2imlp")]
+layout_mode = 2

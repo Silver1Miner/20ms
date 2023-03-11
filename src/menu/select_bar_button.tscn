@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcsvs3l5auciy"]
+
+[ext_resource type="Script" path="res://src/menu/select_bar_button.gd" id="1_0rdd8"]
+[ext_resource type="Texture2D" uid="uid://ymwaf54uhcjh" path="res://assets/ui/buttonSquare_grey.png" id="1_tr078"]
+[ext_resource type="Texture2D" uid="uid://cw67ntgch5u2s" path="res://assets/ui/panel_blue.png" id="2_g6hkn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7ll36"]
+
+[node name="SelectBarButton" type="TextureButton"]
+custom_minimum_size = Vector2(60, 60)
+toggle_mode = true
+texture_normal = ExtResource("1_tr078")
+texture_pressed = ExtResource("2_g6hkn")
+texture_disabled = ExtResource("2_g6hkn")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_0rdd8")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Button"
+label_settings = SubResource("LabelSettings_7ll36")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="toggled" from="." to="." method="_on_toggled"]

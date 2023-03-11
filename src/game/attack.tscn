@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://u5xwxen3vy0a"]
+
+[ext_resource type="Script" path="res://src/game/attack.gd" id="1_fb642"]
+[ext_resource type="Texture2D" uid="uid://br8ixv181rmfp" path="res://assets/pieces/mmstroke_blue.png" id="2_d00cp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_00xfp"]
+
+[node name="Attack" type="Area2D"]
+script = ExtResource("1_fb642")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_d00cp")
+centered = false
+offset = Vector2(4, 4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(20, 20)
+shape = SubResource("RectangleShape2D_00xfp")

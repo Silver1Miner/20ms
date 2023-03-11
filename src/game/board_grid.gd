@@ -191,14 +191,14 @@ func find_powerups() -> void:
 				col_matched += 1
 			if this_y == curr_y and this_color == curr_color:
 				row_matched += 1
-		if col_matched == 4:
-			create_powerup(1, curr_color)
-		elif row_matched == 4:
-			create_powerup(1, curr_color)
-		elif col_matched == 3 and row_matched == 3:
+		if col_matched >= 5 or row_matched >= 5:
 			create_powerup(2, curr_color)
-		elif col_matched == 5 or row_matched == 5:
+		elif col_matched >= 3 and row_matched >= 3:
 			create_powerup(2, curr_color)
+		elif col_matched >= 4:
+			create_powerup(1, curr_color)
+		elif row_matched >= 4:
+			create_powerup(1, curr_color)
 
 func create_powerup(power_type: int, color_id: int) -> void:
 	print("power type: ", power_type, " color id: ", color_id)
@@ -248,6 +248,7 @@ func remove_matches() -> void:
 	for i in width:
 		for j in height:
 			if current_grid[i][j] and current_grid[i][j].is_matched:
+				current_grid[i][j].generate_attack(player_id)
 				current_grid[i][j].queue_free()
 				current_grid[i][j] = null
 				has_match = true

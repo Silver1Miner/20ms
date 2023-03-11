@@ -1,12 +1,25 @@
 [gd_scene load_steps=2 format=3 uid="uid://joljwkjwpkm5"]
 
-[ext_resource type="PackedScene" uid="uid://jqe3sx8b3aan" path="res://src/game/board_grid.tscn" id="1_2da1f"]
+[ext_resource type="PackedScene" uid="uid://bqchm65lr6ibr" path="res://src/game/player_board.tscn" id="1_o8jcy"]
 
 [node name="BoardGame" type="Node2D"]
 
-[node name="BoardGrid" parent="." instance=ExtResource("1_2da1f")]
+[node name="PlayerBoard" parent="." instance=ExtResource("1_o8jcy")]
 position = Vector2(0, 400)
 
-[node name="BoardGrid2" parent="." instance=ExtResource("1_2da1f")]
-position = Vector2(0, 40)
+[node name="PlayerBoard2" parent="." instance=ExtResource("1_o8jcy")]
 player_id = 2
+
+[node name="BoardGrid" parent="PlayerBoard2" index="0"]
+position = Vector2(0, 0)
+
+[node name="TowerLeft" parent="PlayerBoard2" index="1"]
+position = Vector2(0, 200)
+
+[node name="TowerCenter" parent="PlayerBoard2" index="2"]
+position = Vector2(120, 200)
+
+[node name="TowerRight" parent="PlayerBoard2" index="3"]
+position = Vector2(240, 200)
+
+[editable path="PlayerBoard2"]

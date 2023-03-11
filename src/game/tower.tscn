@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://ck017cn31alag"]
+
+[ext_resource type="Script" path="res://src/game/tower.gd" id="1_1cqtj"]
+[ext_resource type="Texture2D" uid="uid://b8w66ttsqwely" path="res://assets/pieces/colorbombs/wrappedsolid_blue.png" id="2_ew6er"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k8y03"]
+size = Vector2(120, 40)
+
+[node name="TowerLeft" type="Area2D"]
+script = ExtResource("1_1cqtj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(60, 20)
+shape = SubResource("RectangleShape2D_k8y03")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(60, 20)
+texture = ExtResource("2_ew6er")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
