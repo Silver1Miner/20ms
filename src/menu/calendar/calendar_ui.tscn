@@ -329,3 +329,8 @@ text = "99"
 custom_minimum_size = Vector2(40, 32)
 layout_mode = 2
 text = "99"
+
+[connection signal="pressed" from="Panel/Display/MonthYear/ButtonPrevMonth" to="." method="_on_button_prev_month_pressed"]
+[connection signal="pressed" from="Panel/Display/MonthYear/ButtonPrevYear" to="." method="_on_button_prev_year_pressed"]
+[connection signal="pressed" from="Panel/Display/MonthYear/ButtonNextYear" to="." method="_on_button_next_year_pressed"]
+[connection signal="pressed" from="Panel/Display/MonthYear/ButtonNextMonth" to="." method="_on_button_next_month_pressed"]

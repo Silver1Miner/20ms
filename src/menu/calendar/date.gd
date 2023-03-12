@@ -43,7 +43,21 @@ func change_to_today() -> void:
 	set_year(datetime_dict["year"])
 
 func change_to_prev_month() -> void:
-	pass
+	if month == 1:
+		set_month(12)
+		set_year(year - 1)
+	else:
+		set_month(month - 1)
 
 func change_to_next_month() -> void:
-	pass
+	if month == 12:
+		set_month(1)
+		set_year(year + 1)
+	else:
+		set_month(month + 1)
+
+func change_to_prev_year() -> void:
+	set_year(year - 1)
+
+func change_to_next_year() -> void:
+	set_year(year + 1)
