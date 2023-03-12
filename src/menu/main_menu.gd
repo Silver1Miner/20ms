@@ -35,5 +35,5 @@ func _on_select_bar_selected(current_select: int) -> void:
 	var tween = create_tween()
 	tween.tween_property(
 		panes, "position:x",
-		(current_select) * -360, 0.3
+		(current_select) * -360, 0.2
 	)

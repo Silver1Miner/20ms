@@ -1,0 +1,118 @@
+[gd_scene format=3 uid="uid://bhqa1kq5wpi6u"]
+
+[node name="Duel" type="Control"]
+custom_minimum_size = Vector2(360, 520)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="P2Label" type="Label" parent="."]
+layout_mode = 0
+offset_top = 40.0
+offset_right = 160.0
+offset_bottom = 80.0
+text = "Player 2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P1Label" type="Label" parent="."]
+layout_mode = 0
+offset_top = 480.0
+offset_right = 160.0
+offset_bottom = 520.0
+text = "Player 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P2Bot" type="CheckButton" parent="."]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 40.0
+offset_right = 320.0
+offset_bottom = 80.0
+text = "Bot"
+
+[node name="P1Bot" type="CheckButton" parent="."]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 480.0
+offset_right = 320.0
+offset_bottom = 520.0
+text = "Bot"
+
+[node name="Player2" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_top = 120.0
+offset_right = 360.0
+offset_bottom = 160.0
+theme_override_constants/separation = 0
+
+[node name="Left" type="VBoxContainer" parent="Player2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Player2/Left"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Left
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Center" type="VBoxContainer" parent="Player2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Player2/Center"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Center"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Right" type="VBoxContainer" parent="Player2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Player2/Right"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Right
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Player1" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_top = 400.0
+offset_right = 360.0
+offset_bottom = 440.0
+theme_override_constants/separation = 0
+
+[node name="Left" type="VBoxContainer" parent="Player1"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Player1/Left"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Left
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Center" type="VBoxContainer" parent="Player1"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Player1/Center"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Center"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Right" type="VBoxContainer" parent="Player1"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Player1/Right"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Right
+"
+horizontal_alignment = 1
+vertical_alignment = 1

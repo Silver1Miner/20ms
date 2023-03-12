@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bll0krlihoe44"]
+[gd_scene load_steps=7 format=3 uid="uid://bll0krlihoe44"]
 
 [ext_resource type="PackedScene" uid="uid://b36a7ab3bx3dd" path="res://src/menu/select_bar.tscn" id="1_gpcce"]
 [ext_resource type="Script" path="res://src/menu/main_menu.gd" id="1_ypxmg"]
+[ext_resource type="PackedScene" uid="uid://eeycusuqigvk" path="res://src/menu/store/store.tscn" id="2_62b1i"]
+[ext_resource type="PackedScene" uid="uid://dcrovyaii8gmk" path="res://src/menu/equip/equip.tscn" id="3_gje7i"]
+[ext_resource type="PackedScene" uid="uid://copbqsx12qlql" path="res://src/menu/daily/records.tscn" id="3_ne5lx"]
+[ext_resource type="PackedScene" uid="uid://bhqa1kq5wpi6u" path="res://src/menu/duel/duel.tscn" id="3_rm4fa"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -28,25 +32,11 @@ offset_right = 1080.0
 offset_bottom = 580.0
 theme_override_constants/separation = 0
 
-[node name="Store" type="Control" parent="Panes"]
-custom_minimum_size = Vector2(360, 520)
+[node name="Store" parent="Panes" instance=ExtResource("2_62b1i")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panes/Store"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "STORE"
-
-[node name="Loadout" type="Control" parent="Panes"]
-custom_minimum_size = Vector2(360, 520)
+[node name="Equip" parent="Panes" instance=ExtResource("3_gje7i")]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="Panes/Loadout"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Loadout"
 
 [node name="Home" type="Control" parent="Panes"]
 custom_minimum_size = Vector2(360, 520)
@@ -54,29 +44,31 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Panes/Home"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Home"
+offset_right = 360.0
+offset_bottom = 26.0
+text = "Campaign"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Duel" type="Control" parent="Panes"]
-custom_minimum_size = Vector2(360, 520)
+[node name="Duel" parent="Panes" instance=ExtResource("3_rm4fa")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panes/Duel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Duel"
-
-[node name="Records" type="Control" parent="Panes"]
-custom_minimum_size = Vector2(360, 520)
+[node name="Records" parent="Panes" instance=ExtResource("3_ne5lx")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panes/Records"]
+[node name="TopBar" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Records"
+offset_right = 360.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TopBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="SelectBar" parent="." instance=ExtResource("1_gpcce")]
 layout_mode = 1

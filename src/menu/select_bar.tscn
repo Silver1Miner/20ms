@@ -20,15 +20,36 @@ script = ExtResource("1_hk4a6")
 [node name="SelectBarButton" parent="." instance=ExtResource("1_2imlp")]
 layout_mode = 2
 
+[node name="Label" parent="SelectBarButton" index="0"]
+text = "Store"
+
 [node name="SelectBarButton2" parent="." instance=ExtResource("1_2imlp")]
 layout_mode = 2
+
+[node name="Label" parent="SelectBarButton2" index="0"]
+text = "Loadout"
 
 [node name="SelectBarButton3" parent="." instance=ExtResource("1_2imlp")]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 
+[node name="Label" parent="SelectBarButton3" index="0"]
+text = "Home"
+
 [node name="SelectBarButton4" parent="." instance=ExtResource("1_2imlp")]
 layout_mode = 2
 
+[node name="Label" parent="SelectBarButton4" index="0"]
+text = "Duel"
+
 [node name="SelectBarButton5" parent="." instance=ExtResource("1_2imlp")]
 layout_mode = 2
+
+[node name="Label" parent="SelectBarButton5" index="0"]
+text = "Daily"
+
+[editable path="SelectBarButton"]
+[editable path="SelectBarButton2"]
+[editable path="SelectBarButton3"]
+[editable path="SelectBarButton4"]
+[editable path="SelectBarButton5"]

@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://copbqsx12qlql"]
+
+[ext_resource type="PackedScene" uid="uid://c5d8ldpeq6ccv" path="res://src/menu/calendar/calendar_ui.tscn" id="1_1u1ee"]
+
+[node name="Records" type="Control"]
+custom_minimum_size = Vector2(360, 520)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="CalendarUI" parent="." instance=ExtResource("1_1u1ee")]
+layout_mode = 1
+offset_bottom = -200.0
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 340.0
+offset_right = 280.0
+offset_bottom = 380.0
+text = "Daily Challenge"
+
+[node name="RecordDisplay" type="Control" parent="."]
+anchors_preset = 0
+offset_top = 380.0
+offset_right = 360.0
+offset_bottom = 520.0
